@@ -2,11 +2,12 @@ import datetime
 import calendar
 import random
 import subprocess
-import time
 
-EMAIL = "rudranag.katroju@gmail.com"
-USERNAME = "rudranag"
-REPO_URL = "git@github.com:rudranag/tests.git"
+EMAIL = ""
+USERNAME = ""
+REPO_URL = ""
+
+
 
 YEAR = datetime.datetime.now().year
 FROM_MONTH = 1
@@ -36,8 +37,22 @@ def pick_random_numbers(n, threshold):
     return sorted(random.sample(range(1, n + 1), threshold))
 
 
-def setup():
 
+def main():
+
+    if not EMAIL:
+        print("Email is required")
+        return
+
+    if not USERNAME:
+        print("Username is required")
+        return
+
+    if not REPO_URL:
+        print("Repo url is required")
+        return
+    
+    
     subprocess.run("rm -rf .git", shell=True)
     subprocess.run("git init", shell=True)
 
@@ -47,12 +62,6 @@ def setup():
     subprocess.run("git add README.md", shell=True)
     subprocess.run('git commit -m "first commit"', shell=True)
     subprocess.run(f"git remote add origin {REPO_URL}", shell=True)
-    subprocess.run("git push -u origin master", shell=True)
-
-
-def main():
-    
-    setup()
 
     for month in range(FROM_MONTH, TO_MONTH):
         month_days = get_days_in_month(YEAR, month)
@@ -64,8 +73,9 @@ def main():
             for _ in range(random.randint(MIN_COMMITS, MAX_COMMITS)):
                 make_commits(year=YEAR, month=month, day=each_day)
 
-    time.sleep(5)
-    subprocess.run("git push", shell=True)
+
+    subprocess.run("git push -u origin master", shell=True)
+    
 
     print("Success")
     
