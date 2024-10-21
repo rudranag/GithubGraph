@@ -5,7 +5,7 @@ import subprocess
 
 EMAIL = ""
 USERNAME = ""
-REPO_URL = ""
+REPO_URL = ""  # your new private Repo url to push empty commits
 
 
 
